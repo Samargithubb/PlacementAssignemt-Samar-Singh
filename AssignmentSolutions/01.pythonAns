@@ -7,12 +7,13 @@ def find_highest_frequency_word_length(string):
         else:
             word_count[word] = 1
 
-    max_frequency = 0
+    max_frequency = max(word_count.values())
     max_word_length = 0
     for word, frequency in word_count.items():
-        if frequency > max_frequency:
-            max_frequency = frequency
-            max_word_length = len(word)
+        if frequency == max_frequency:
+            word_length = len(word)
+            if word_length > max_word_length:
+                max_word_length = word_length
 
     return max_word_length
 
@@ -22,7 +23,7 @@ string = "write write write all the number from from from 1 to 100"
 print(find_highest_frequency_word_length(string))
 
 # Test case 2
-string2 = "the completed data science data science data from ineuron"
+string2 = "the quick brown fox jumps over the lazy dog"
 print(find_highest_frequency_word_length(string2))
 
 # Test case 3
