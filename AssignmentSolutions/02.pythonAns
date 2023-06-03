@@ -1,0 +1,29 @@
+def is_valid_string(s):
+    char_count = {}
+
+    # Count the frequency of each character
+    for char in s:
+        if char in char_count:
+            char_count[char] += 1
+        else:
+            char_count[char] = 1
+
+    # Check if all frequencies are the same
+    frequencies = list(char_count.values())
+    if all(frequency == frequencies[0] for frequency in frequencies):
+        return "YES"
+    else:
+        return "No"
+
+
+# Test case 1
+s1 = "abc"
+print(is_valid_string(s1))  # Output: YES
+
+# Test case 2
+s2 = "abcc"
+print(is_valid_string(s2))  # Output: NO
+
+# Test case 3
+s3 = "aabbcc"
+print(is_valid_string(s3))  # Output: YES
