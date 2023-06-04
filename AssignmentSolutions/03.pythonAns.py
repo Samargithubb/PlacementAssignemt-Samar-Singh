@@ -1,6 +1,7 @@
 import pandas as pd
 import requests
 
+
 # Download the data from given link
 url = "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json"
 response = requests.get(url)
@@ -23,7 +24,11 @@ for pokemon in pokemon_list:
         'egg': pokemon['egg'],
         'spawn_chance': pokemon['spawn_chance'],
         'avg_spawns': pokemon['avg_spawns'],
-        'spawn_time': pokemon['spawn_time']
+        'spawn_time': pokemon['spawn_time'],
+        'multipliers': pokemon['multipliers'],
+        'weakness' : pokemon['weaknesses'],
+        'next_evolution': [evo['name'] for evo in pokemon.get('next_evolution', [])],
+        'prev_evolution': [evo['name'] for evo in pokemon.get('prev_evolution', [])]
     }
 
     structured_data.append(pokemon_info)
@@ -31,7 +36,5 @@ for pokemon in pokemon_list:
 df = pd.DataFrame(structured_data)
 
 df.to_excel('pokemon.xlsx', index=False)
-
-
 
 
