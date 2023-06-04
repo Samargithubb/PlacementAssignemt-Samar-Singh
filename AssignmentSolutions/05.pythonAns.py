@@ -17,10 +17,10 @@ show_info = {
     'airdate': data.get('_embedded', {}).get('episodes',[{}])[0].get('airdate'),
     'airtime': data.get('_embedded', {}).get('episodes',[{}])[0].get('airtime'),
     'runtime': data.get('runtime'),
-    'average rating': data.get('rating', {}).get('average', 'Unknown'),
-    'summary': data.get('summary', 'Unknown').strip().replace('<p>', '').replace('</p>', ''),
-    'medium image link': data.get('image', {}).get('medium', 'Unknown'),
-    'original image link': data.get('image', {}).get('original', 'Unknown')
+    'average rating': data.get('rating', {}).get('average'),
+    'summary': data.get('summary'),
+    'medium image link': data.get('image', {}).get('medium'),
+    'original image link': data.get('image', {}).get('original')
 }
 
 # Print the extracted information
