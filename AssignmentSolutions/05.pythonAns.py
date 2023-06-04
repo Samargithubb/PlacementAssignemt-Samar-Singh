@@ -1,29 +1,57 @@
 import requests
-import json
 
-# Download data from the API link
+# API URL
 url = "http://api.tvmaze.com/singlesearch/shows?q=westworld&embed=episodes"
+
+# Send GET request to the API and retrieve the data
 response = requests.get(url)
 data = response.json()
 
-# Extract relevant information from the data
-show_info = {
-    'id': data.get('id'),
-    'url': data.get('url'),
-    'name': data.get('name'),
-    'season': data.get('_embedded', {}).get('episodes', [{}])[0].get('season'),
-    'number': data.get('_embedded', {}).get('episodes',[{}])[0].get('number'),
-    'type': data.get('type'),
-    'airdate': data.get('_embedded', {}).get('episodes',[{}])[0].get('airdate'),
-    'airtime': data.get('_embedded', {}).get('episodes',[{}])[0].get('airtime'),
-    'runtime': data.get('runtime'),
-    'average rating': data.get('rating', {}).get('average'),
-    'summary': data.get('summary'),
-    'medium image link': data.get('image', {}).get('medium'),
-    'original image link': data.get('image', {}).get('original')
-}
+# Extract information from the data
+show_id = data['id']
+show_name = data['name']
 
-# Print the extracted information
-for key, value in show_info.items():
-    print(f"{key}: {value}")
+episodes = data['_embedded']['episodes']
+episode_data = []
 
+# Iterate over each episode and extract the required attributes
+for episode in episodes:
+    episode_id = episode['id']
+    episode_url = episode['url']
+    episode_name = episode['name']
+    season_number = episode['season']
+    episode_number = episode['number']
+    episode_type = episode['type']
+    airdate = episode['airdate']
+    airtime = episode['airtime']
+    runtime = episode['runtime']
+    average_rating = episode['rating']['average']
+    summary = episode['summary']
+    medium_image = episode['image']['medium']
+    original_image = episode['image']['original']
+
+    # Clean the summary by removing HTML tags
+    clean_summary = summary.strip('<p>').strip('</p>')
+
+    # Create a dictionary of episode data
+    episode_info = {
+        'id': episode_id,
+        'url': episode_url,
+        'name': episode_name,
+        'season': season_number,
+        'number': episode_number,
+        'type': episode_type,
+        'airdate': airdate,
+        'airtime': airtime,
+        'runtime': runtime,
+        'average_rating': average_rating,
+        'summary': clean_summary,
+        'medium_image': medium_image,
+        'original_image': original_image
+    }
+
+    episode_data.append(episode_info)
+
+# Print the extracted episode data
+for episode in episode_data:
+    print(episode)
