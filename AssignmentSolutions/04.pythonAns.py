@@ -9,17 +9,18 @@ data = response.json()
 structured_data = []
 for item in data:
     data_info = {
-        'name': item.get('name'),
-        'id': item.get('id'),
+        'Name of Earth Meteorite': item.get('name'),
+        'ID of Earth Meteorite': item.get('id'),
         'nametype': item.get('nametype'),
         'recclass': item.get('recclass'),
-        'mass': item.get('mass'),
-        'fall': item.get('fall'),
-        'year': item.get('year'),
-        'reclat': item.get('reclat'),
-        'reclong': item.get('reclong'),
-        'geolocation': item.get('geolocation')
+        'Mass of Earth Meteorite': item.get('mass'),
+        'Year at which Earth Meteorite was hit':pd.to_datetime(item.get('year'), errors='coerce'),
+        'reclat': (item.get('reclat')),
+        'reclong':(item.get('reclong')),
+        'Coordinates': item.get('geolocation', {}).get('coordinates', [])
     }
     structured_data.append(data_info)
+
 df = pd.DataFrame(structured_data)
-df.to_csv('data1.csv', index=False)
+df.to_csv('earth.csv', index=False)
+
